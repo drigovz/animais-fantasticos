@@ -25,6 +25,15 @@ body {
   margin-top: 2rem;
   margin-bottom: 2rem;
   background: #FB5;
+
+
+  
+  transition: height 350ms ease-in-out;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+   -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+       animation: fadein 2s;
 }
 
 .menu ul {
@@ -205,4 +214,16 @@ body {
   .copy {
     margin-bottom: 0px;
   }
+}
+
+.menu-fixo {
+  margin-top: 0rem;
+  position: fixed;
+  width: 100%;
+  right: 0;
+  top: 0;
+}
+
+.ativo {
+  background-color: #e28203;
 }
