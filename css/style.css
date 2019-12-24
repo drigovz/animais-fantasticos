@@ -25,15 +25,16 @@ body {
   margin-top: 2rem;
   margin-bottom: 2rem;
   background: #FB5;
-
-
-  
   transition: height 350ms ease-in-out;
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 2s; /* Firefox < 16 */
-   -ms-animation: fadein 2s; /* Internet Explorer */
-    -o-animation: fadein 2s; /* Opera < 12.1 */
-       animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s;
+  /* Firefox < 16 */
+  -ms-animation: fadein 2s;
+  /* Internet Explorer */
+  -o-animation: fadein 2s;
+  /* Opera < 12.1 */
+  animation: fadein 2s;
 }
 
 .menu ul {
@@ -103,6 +104,10 @@ body {
   height: 370px;
   overflow-y: scroll;
   grid-column: 2;
+}
+
+.animais-lista li {
+  cursor: pointer;
 }
 
 .animais-lista::-webkit-scrollbar {
@@ -224,6 +229,47 @@ body {
   top: 0;
 }
 
-.ativo {
+/* .ativo {
   background-color: #e28203;
+} */
+
+.font-maior {
+  font-size: 4em;
+}
+
+/*
+  Adicionamos uma classe .js ao elemento HTML que é o elemento pai de todos os outros elementos da página para que 
+  quando o javascritp estiver desabilitado do navegador, podermos ainda assim exibir o conteúdo da página.
+ */
+/* sumir com as sections dentro da classe js-tabcontent */
+.js .js-tabcontent section {
+  display: none;
+}
+
+/* exibir as sections que tiverem a classe  .ativo */
+
+.js .js-tabcontent section.ativo {
+  display: block !important;
+  /* animation: nome da animação - segundo parâmetro é o tempo total em que a animação vai ocorrer
+     nesse exemplo é de 0.5 segundos, e por fim passamos o forwards, para quando a animação chegar no final 
+     ela parar de rodar, sem esse parâmetro setado como forward, a animação volta para o estado de inicio e 
+     se repete, como um loop.
+   */
+  animation: show .5s forwards;
+}
+
+/* adicionar animação no css com keyframes */
+
+@keyframes show {
+  /* sai de opacidade 0 */
+  from {
+    opacity: 0;
+    /* o translate3d(x, y, z) move o conteúdo em três eixos: x (horizontal), y (vertical), z (profundidade) */
+    transform: translate3d(-30px, 0, 0);
+  }
+  /* termina em opacidade 1 */
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }

@@ -7,6 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- 
+        Escrevemos o código abaixo para verificar se o JS está habilitado no navegador do cliente, se sim, 
+        então adicionamos a classe .js ao elemento HTML (document.documentElement) para ainda assim ele 
+        exibir o conteúdo na tela.
+        Outro detalhe é que usamos o className, ao invés de usar o classList.add(), isso pq o className dá suporte
+        aos browsers mais antigos, já o classList.add() pode não rodar em browsers muito antigos  
+    -->
+    <script type="text/javascript">
+        document.documentElement.className = ' js';
+    </script>
 </head>
 
 <body>
@@ -20,7 +30,7 @@
     </nav>
     <section class="grid-section animais" id="animais">
         <h1 class="titulo">Animais Fantásticos</h1>
-        <ul class="animais-lista">
+        <ul class="animais-lista js-tabmenu">
             <li>
                 <img src="img/imagem1.jpg">
             </li>
@@ -40,7 +50,7 @@
                 <img src="img/imagem6.jpg">
             </li>
         </ul>
-        <div class="animais-descricao">
+        <div class="animais-descricao js-tabcontent">
             <section>
                 <h2>Raposa</h2>
                 <p>As raposas são animais mamíferos e onívoros pertencentes à família Canidae. São vulpídeos de porte
