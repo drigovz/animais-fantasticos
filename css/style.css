@@ -241,7 +241,9 @@ body {
   Adicionamos uma classe .js ao elemento HTML que é o elemento pai de todos os outros elementos da página para que 
   quando o javascritp estiver desabilitado do navegador, podermos ainda assim exibir o conteúdo da página.
  */
+
 /* sumir com as sections dentro da classe js-tabcontent */
+
 .js .js-tabcontent section {
   display: none;
 }
@@ -272,4 +274,53 @@ body {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
+}
+
+/* estilos para os accordion list */
+
+.js .js-accordion dd {
+  display: none;
+}
+
+/* adicionando setinha que muda com o clique no elemento */
+
+.js .js-accordion dt::after {
+  content: '↴';
+  margin-left: 10px;
+}
+
+/* quando tiver ativo a setinha muda apontando para cima */
+
+.js .js-accordion dt.ativo::after {
+  content: '↰';
+  margin-left: 10px;
+}
+
+/* tornando o elemento dd visivel */
+
+.js .js-accordion dd.ativo {
+  display: block;
+  animation: slideDown .5s forwards;
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 300px;
+    opacity: 1;
+  }
+}
+
+.js .js-scroll {
+  opacity: 0;
+  transition: .3s;
+  transform: translate3d(-30px, 0, 0);
+}
+
+.js .js-scroll.ativo {
+  opacity: 1;  
+  transform: translate3d(0, 0, 0);
 }
