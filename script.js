@@ -144,14 +144,14 @@ initAnimacaoScroll();
 
 
 // exercícios de string 
-// utilizando o foreach no array abaixo, some os valore de taxa, e os valores de recebimento
+// utilizando o foreach no array abaixo, some os valores de taxa, e os valores de recebimento
 const transacoes = [
     {
         descricao: 'Taxa de Pão',
         valor: 'R$ 39'
     },
     {
-        descricao: 'Taxa de marcado',
+        descricao: 'Taxa de mercado',
         valor: 'R$ 129'
     },
     {
@@ -168,4 +168,18 @@ const transacoes = [
     }
 ];
 
+let taxaTotal = 0,
+    recebimentoTotal = 0;
 
+transacoes.forEach((item) => {
+    if (item.descricao.startsWith('Taxa')) {
+        let valorTaxa = +item.valor.replace('R$', '').trim();
+        taxaTotal += valorTaxa;
+    } else if (item.descricao.startsWith('Recebimento')) {
+        let valorRecebimento = +item.valor.replace('R$', '').trim();
+        recebimentoTotal += valorRecebimento;
+    }
+});
+
+console.log(`Valor de total das taxas = ${taxaTotal}`);
+console.log(`Valor de total do recebimento = ${recebimentoTotal}`);
