@@ -1,0 +1,57 @@
+[data-dropdown=""] {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    /* 38px é um tamanho bom pra não deixar gap entre o li e o dropdown (o gap seria o espaço vazio entre dois elementos) */
+    top: 38px;
+    background-color: #e54;
+    border: 2px solid #333;
+    z-index: 200;
+}
+
+/* desenando um triangulo */
+
+.dropdown-menu::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -10px;
+    width: 0px;
+    height: 0px;
+    /* estilo necessário para desenhar um triângulo com css */
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #e54;
+}
+
+.dropdown-menu li a:hover {
+    color: #fff;
+}
+
+/* dropdown menu com css puro */
+
+[data-dropdown] .dropdown-menu {
+    display: none;
+    animation: show-up .5s forwards;
+}
+
+[data-dropdown]:hover .dropdown-menu,
+[data-dropdown].ativo .dropdown-menu {
+    display: block;
+}
+
+
+@keyframes show-up {
+    from {
+        opacity: 0;
+        /* 30px de margem inferior */
+        transform: translate3d(0, 30px, 0);
+    }
+    top {
+        opacity: 1;
+        transform: translate3d(0, 0, 0); 
+    }
+}
+
