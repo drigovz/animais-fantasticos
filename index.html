@@ -25,8 +25,15 @@
 
 
         <!-- <div id="div" data-cor="azul" data-width="500">Div</div> -->
+
         <nav class="menu" data-menu="suave">
-            <ul>
+            <!--
+                Menu mobile o artibuto aria-expanded="false" é para dizer para um leitor de tela que o menu abaixo não está
+                expandido, está escondido.
+                aria-controls="menu" - indica qual controle esse botão está controlando, nesse caso é o que possui id menu
+            -->
+            <button data-menu="button" aria-expanded="false" aria-controls="menu">Menu</button>
+            <ul data-menu="lista" id="menu">
                 <li><a href="#animais">Animais</a></li>
                 <li data-dropdown="">
                     <a href="sobre.html">Sobre</a>
@@ -157,6 +164,32 @@
                     <p>Também apresentam como particularidade suas pupilas ovais, semelhantes às pupilas verticais dos
                         felídeos.</p>
                 </section>
+            </div>
+        </section>
+
+        <section class="grid-section numeros" id="numerosTarget" data-anime="scroll">
+            <h1 class="titulo">Números</h1>
+        
+            <div class="numeros-grid">
+                <div class="numero-animal">
+                    <h3>Lobos</h3>
+                    <span data-numero="">4874</span>
+                </div>
+        
+                <div class="numero-animal">
+                    <h3>Raposas</h3>
+                    <span data-numero="">5374</span>
+                </div>
+        
+                <div class="numero-animal">
+                    <h3>Esquilos</h3>
+                    <span data-numero="">12340</span>
+                </div>
+        
+                <div class="numero-animal">
+                    <h3>Ursos</h3>
+                    <span data-numero="">230</span>
+                </div>
             </div>
         </section>
 

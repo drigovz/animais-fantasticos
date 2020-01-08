@@ -16,8 +16,15 @@ export default function outsideClick(element, events, callback) {
         // adicionamos o evento de clique ou do evento touchstart, ou qualquer outro evento já que o events pode ser qualquer
         // evento que estamos passando ao HTML
         events.forEach(item => {
-            html.addEventListener(item, handleOutsideClick);
-        });
+            // usamos o setTimeout porque esse é um método assincrono e faz com que o 'html.addEventListener(item, handleOutsideClick);' aconteça 
+            // idependente da espera do resto da execução do código, nesse caso ele executa a função antes dela entrar na fase de bubble
+            // isso significa que ele vai até o html, ainda não vai existir o addEventListener, porque ele estará na fila por conta do 
+            // setTimeout, e aí só quando terminou a fase de bubble e todo o resto ele vai adicionar o addEventListener ao HTML
+            // ou seja, assim ele não está ativando o callback de primeira
+            setTimeout(() => {
+                html.addEventListener(item, handleOutsideClick);
+            });
+        }, 0);
 
         // abaixo adicionamos um atributo ao element para indicar que já adicionamos esse evento ao elemento 
         // e com isso impedimos que o usuário saia gerando um novo evento a cada clique que ele der no 

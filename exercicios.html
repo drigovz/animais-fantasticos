@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="red">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Exercícios</title>
+    <style type="text/css">
+        .red {
+            background-color: #ff0000;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Exercícios de Javascript</h1>
+
+        <p>contador: <b>0</b></p>
+
+        <input type="submit" id="iniciar" value="iniciar" />
+        <input type="submit" id="pausar" value="pausar" />
+        <!-- <input type="submit" id="reiniciar" value="reiniciar" /> -->
+    </main>
+
+
+    <!-- troca a cor do fundo da tela a cada dois segundos -->
+    <!-- <script type="text/javascript">
+        const html = document.querySelector('html');
+
+        const vermelho = setInterval(() => {
+            html.classList.toggle('blue');
+        }, 2000);
+    </script> -->
+
+    <!-- cria um cronômetro - onde um clique ativa o cronômetro, e dois cliques no pausar reseta -->
+    <script type="text/javascript">
+        const contador = document.querySelector('b'),
+            iniciar = document.querySelector('#iniciar'),
+            pausar = document.querySelector('#pausar');
+
+        let tempo = 1,
+            timer;
+
+        function initChronometer() {
+            timer = setInterval(() => {
+                contador.innerHTML = tempo++;
+            }, 100);
+            iniciar.setAttribute('disabled', '');
+        };
+
+        function rebootChronometer() {
+            setInterval(() => {
+                contador.innerHTML = tempo++;
+            }, 100);
+        };
+
+        iniciar.addEventListener('click', () => {
+            initChronometer();
+        });
+
+        pausar.addEventListener('click', () => {
+            clearInterval(timer);
+            iniciar.removeAttribute('disabled');
+        });
+
+        // dblclick - é o evento de duplo clique no botão 
+        pausar.addEventListener('dblclick', () => {
+            tempo = 0;
+            contador.innerHTML = tempo;
+        });       
+    </script>
+</body>
+
+</html>

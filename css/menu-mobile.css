@@ -1,0 +1,64 @@
+[data-menu="button"] {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .js [data-menu="button"] {
+        position: relative;
+        z-index: 300;
+        display: flex;
+        /* alinhar itens ao centro da div */
+        align-items: center;
+        background-color: #222222;
+        border: none;
+        padding: .5rem 1rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: bold;
+        color: #ffffff;
+        cursor: pointer;
+        margin: 10px;
+    }
+    
+    /* criar icone de três tracinhos do menu */
+    .js [data-menu="button"]::before {
+        margin-right: 4px;
+        content: '';
+        display: inline-block;
+        height: 2px;
+        width: 12px;
+        background-color: #ffffff;
+        /* cria os outros doistracinhos */
+        box-shadow: 0 4px #ffffff, 0 -4px #ffffff;
+        transition: transform .5s;
+    }
+
+    /* classe ativo para quando fixar o menu */
+    .js [data-menu="button"].ativo::before {
+        transform: rotate(90deg);
+    }
+
+    /* mudar estilos da ul do menu */
+    .js [data-menu="lista"] {
+        display: none;
+        position: absolute;
+        background-color: #fb5;
+        width: 180px;
+        z-index: 200;
+        padding: 60px 0 20px 0;
+        top: 0;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .js [data-menu="lista"].ativo {
+        display: block;
+        animation: show-right .3s forwards;
+    }
+
+    /* posicionando o menu dropdown para que o mesmo não cia no menu mobile */
+    .js .dropdown-menu {
+        position: static;
+        border: none;
+    }
+}

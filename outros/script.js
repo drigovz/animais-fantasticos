@@ -126,7 +126,8 @@ function initAnimacaoScroll() {
                 // verifica se é isSectionVisible é uma variável verdadeira, ou seja, o usuário passou da metade da tela
                 if (isSectionVisible) {
                     section.classList.add('ativo');
-                } else {
+                    // verificamos se ele tem a classe ativo, se sim, removemos 
+                } else if (section.classList.contains('ativo')) {
                     section.classList.remove('ativo');
                 }
             });
