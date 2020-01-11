@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Formulários no Javascript</title>
+</head>
+
+<body>
+    <style type="text/css">
+        label {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            margin-bottom: .5rem;
+            margin-top: 1rem;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: .5rem;
+            border: 2px solid #000;
+            font-size: 1rem;
+            margin-bottom: .5rem;
+        }
+
+        textarea {
+            height: 150px;
+        }
+
+        .invalido {
+            border-color: #ff0000;
+        }
+
+        input[type="color"] {
+            display: block;
+            margin: 10px 0 0 0;
+        }
+    </style>
+    <main>
+        <form name="contato" id="contato">
+            <fieldset>
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome" value="" required="required" />
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="" required="required" />
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" name="telefone" id="telefone" value="" required="required" />
+
+                <label for="mensagem">Mensagem</label>
+                <textarea name="mensagem" id="mensagem" value="" required="required"></textarea>
+
+                <select name="cores" id="cores">
+                    <option value="black">Preto</option>
+                    <option value="white">Branco</option>
+                    <option value="blue">Azul</option>
+                </select>
+
+                <input type="color" name="inputColor" id="inputColor" />
+
+                <input type="range" name="inputRange" id="inputRange" max="300" min="0" />
+                <label for="inputRange"></label>
+
+                <input type="checkbox" name="identidade" value="identidade" id="identidade" />
+                <label for="identidade">Possui identidade?</label>
+                <br />
+                <br />
+                <br />
+
+                <input type="radio" name="intrumento" id="guitarra" value="guitarra" data-radio="lista-instrumento" />
+                <label for="guitarra">Guitarra</label>
+
+                <input type="radio" name="intrumento" id="baixo" value="baixo" data-radio="lista-instrumento" />
+                <label for="baixo">Baixo</label>
+
+                <input type="radio" name="intrumento" id="bateria" value="bateria" data-radio="lista-instrumento" />
+                <label for="bateria">Bateria</label>
+
+                <input type="radio" name="intrumento" id="pandeiro" value="pandeiro" data-radio="lista-instrumento" />
+                <label for="pandeiro">Pandeiro</label>
+
+                <label id="aviso" for="aviso"></label>
+            </fieldset>
+        </form>
+    </main>
+
+    <!-- <script type="text/javascript">
+        const form = document.forms.contato,
+            nome = document.forms.contato.nome,
+            label = document.querySelector('#aviso');
+
+        nome.addEventListener('change', () => {
+            label.innerText = event.target.value;
+        });
+        // nome.addEventListener('keyup', () => {
+        //     label.innerText = nome.value;
+        // });
+    </script> -->
+
+    <!-- validações com JS -->
+    <script type="text/javascript">
+        const form = document.forms.contato,
+            nome = document.forms.contato.nome.value,
+            telefone = document.forms.contato.telefone.value,
+            email = document.forms.contato.email.value,
+            mensagem = document.forms.contato.mensagem.value,
+            label = document.querySelector('#aviso');
+
+        form.addEventListener('change', (event) => {
+            // adiciona o event taget em uma constante pra não ficar repetindo o código toda a hora 
+            target = event.target;
+
+            // se retornar um 'false' da validação, então adicionamos a classe inválido e soltamos uma 
+            // mensagem personalizada com o setCustomValidity();
+            if (target.checkValidity() === false) {
+                target.classList.add('invalido');
+                target.setCustomValidity('Informe um endereço de email válido!');
+                label.innerText = target.validationMessage;
+                console.log(target.checkValidity());
+            }
+        });
+
+
+        // SELECT 
+        const selectControl = document.querySelector('#cores');
+
+        selectControl.addEventListener('change', (event) => {
+            document.body.style.backgroundColor = selectControl.value;
+        });
+
+
+        // COLOR
+        const colorControl = document.querySelector('#inputColor');
+
+        // o evento 'input' é todo o informação dada como entrada em um input
+        // então a cada modificação dessa informação a cor do body muda com a função abaixo
+        colorControl.addEventListener('input', (event) => {
+            document.body.style.backgroundColor = event.target.value;
+        });
+
+        // RANGE
+        const inputRange = document.querySelector('#inputRange');
+        inputRange.addEventListener('input', (event) => {
+            // usamos o nextElementSibling para pegar o próximo elemento após o inputRange que é o span onde 
+            // vamos exibir o texto
+            inputRange.nextElementSibling.innerText = 'R$ ' + inputRange.value + ',00';
+        });
+
+
+        // CHECKBOX
+        const inputCheckbox = document.querySelector('#identidade');
+
+        inputCheckbox.addEventListener('change', (event) => {
+            const inputMarcado = event.target.checked;
+            if (inputMarcado === true) {
+                document.body.style.backgroundColor = 'green';
+            } else {
+                document.body.style.backgroundColor = 'red';
+            }
+        });
+
+
+        // RADIO 
+        const inputRadio = document.querySelectorAll('[data-radio="lista-instrumento"]');
+
+        inputRadio.forEach((item) => {
+            item.addEventListener('change', (event) => {
+                const radioMarcado = event.target.checked;
+                if(radioMarcado === true) {
+                    console.log(item.value)
+                }
+            });
+        }); 
+
+        // PEGAR TODOS OS DADOS INFORMADOS NO FORM E JOGAR EM UM OBJETO
+        // const form = document.forms.contato;
+
+        // criamos um objeto vazio que receberá os dados do form
+        const dados = {};
+
+        // adicionamos um evento change ao formulario geral e 
+        contato.addEventListener('change', (event) => {
+            // adicionamos o nome da propriedade com o mesmo nome do item do form que foi clicado 
+            // adicionamos o valor dessa propriedade com o valor do item que foi clicado
+            dados[event.target.name] = event.target.value;
+            console.log(dados);
+            /*
+             a saída será algo como:
+             cores: "black"
+
+            email: "remail@email.com"
+            
+            identidade: "identidade"
+            
+            inputColor: "#bf197f"
+            
+            intrumento: "guitarra"
+            
+            mensagem: "mensagem informada"
+            
+            nome: "nome informado"
+            
+            telefone: "87878787"
+            */
+        });
+
+    </script>
+
+</body>
+
+</html>
