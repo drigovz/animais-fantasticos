@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Promisse</title>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        // const promessa = new Promise((resolve, reject) => {
+        //     let condicao = true;
+        //     if (condicao === true) {
+        //         resolve('Promisse resolvida!');
+        //     } else {
+        //         reject(Error('A promise foi rejeitada!'));
+        //     }
+        // }).then((condicao) => {
+        //     console.log(condicao);
+        // });
+
+        // const promessa = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve('Resolvido');
+        //     }, 1000);
+        // }).then((resolution) => {
+        //     console.log(resolution); // Resolvido
+        //     return 'Etapa 1 finalizou';
+        // }).then((resolution) => {
+        //     console.log(resolution); // Etapa 1 finalizou
+        //     return 'Etapa 2 finalizou';
+        // }).catch(reject => {
+        //     console.log(reject);
+        // }).finally(() => {
+        //     console.log('A promessa finalizou sua execução!');
+        // });
+
+
+        const login = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve('Usuário logado!');
+            }, 1000);
+        });
+
+        const dados = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve('Dados carregados!');
+            }, 1500);
+        });
+
+        const carregouTudo =
+            Promise.all([login, dados])
+                .then((resolution) => {
+                    const retorno = resolution;
+                    console.log(retorno);
+                });
+                
+    </script>
+</body>
+
+</html>

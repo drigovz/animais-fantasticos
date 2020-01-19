@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <h1 data-titulo="titulo"></h1>
+    </main>
+
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Informe o seu CEP</label>
+                <input type="text" class="form-control" id="cep" aria-describedby="cep">
+            </div>
+            <div class="invalid-feedback">
+                Por favor! Informe oseu CEP!
+            </div>
+
+            <div class="form-group">
+                <label for="logradouro">Logradouro: <b data-cep="logradouro"></b></label>
+                <label for="bairro">Bairro: <b data-cep="bairro"></b></label>
+                <label for="cidade">Cidade: <b data-cep="cidade"></b></label>
+                <label for="uf">UF: <b data-cep="uf"></b></label>
+                <label for="ibge">IBGE: <b data-cep="ibge"></b></label>
+                <label data-aviso="aviso" for="aviso"></label>
+            </div>
+        </form>
+
+
+
+
+        <div class="form-group">
+            <label for="blockchain">Blockchain</label>
+            <label for="avisoBlockchain">15m: <b data-blockchain="15m"></b></label>
+            <label for="last">last: <b data-blockchain="last"></b></label>
+            <label for="buy">buy: <b data-blockchain="buy"></b></label>
+            <label for="sell">sell: <b data-blockchain="sell"></b></label>
+            <label for="symbol">symbol: <b data-blockchain="symbol"></b></label>
+            <label data-aviso="avisoBlockchain" for="avisoBlockchain"></label>
+        </div>
+    </div>
+
+    <img src="" alt="imagem" class="img-fluid" title="imagem" />
+
+
+
+    <div class="card">
+        <div class="card-body">
+            <figure>
+                <img data-joke="image" src="" alt="imagem" class="img-fluid" title="imagem" />
+            </figure>
+
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <p class="card-text">
+            </p>
+            <a href="#" target="_blank" class="card-link">Clique aqui</a>
+        </div>
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+        // fetch('./arquivos/doc.txt')
+        // .then((response) => {
+        //     return response.text();
+        // }).then((body) => {
+        //     const tituloPagina = document.querySelector('[data-titulo="titulo"]');
+
+        //     tituloPagina.innerText = body;
+        // });
+
+
+        // busca CEP 
+        const textoCEP = document.querySelector('#cep'),
+            logradouro = document.querySelector('[data-cep="logradouro"]'),
+            bairro = document.querySelector('[data-cep="bairro"]'),
+            cidade = document.querySelector('[data-cep="cidade"]'),
+            uf = document.querySelector('[data-cep="uf"]'),
+            ibge = document.querySelector('[data-cep="ibge"]'),
+            aviso = document.querySelector('[data-aviso="aviso"]');
+
+        textoCEP.addEventListener('keyup', (event) => {
+            // limpa os controles para uma nova busca 
+            logradouro.innerText = '';
+            bairro.innerText = '';
+            cidade.innerText = '';
+            uf.innerText = '';
+            ibge.innerText = '';
+            aviso.innerText = '';
+
+            const valorInformado = textoCEP.value;
+            if (valorInformado !== '' && valorInformado !== null && valorInformado !== undefined) {
+                fetch(`https://viacep.com.br/ws/${valorInformado}/json`)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then(cep => {
+                        logradouro.innerText = cep.logradouro;
+                        bairro.innerText = cep.bairro;
+                        cidade.innerText = cep.localidade;
+                        uf.innerText = cep.uf;
+                        ibge.innerText = cep.ibge;
+
+                        console.log(cep);
+                    }).catch((reject) => {
+                        aviso.innerText = 'Erro no CEP informado! Ou endereço não encontrado!';
+                    });
+            } else {
+                textoCEP.classList.add('is-invalid');
+            }
+        });
+
+
+
+
+        // troca css da página 
+        const styleElement = document.createElement('style');
+
+        fetch('./arquivos/fetch.css')
+            // converte o arquivo encontrado para o formato texto
+            .then(response => {
+                if (response.status === 404) {
+                    aviso.innerText = 'Arquivo não encontrado!';
+                } else {
+                    response.text();
+                }
+            })
+            .then(stylerResponse => {
+                // adiciona no texto da tag <style> que vamos criar o texto do arquivo .css que retornou
+                styleElement.innerHTML = stylerResponse;
+                // injeta a tag <style> no corpo da nossa página                
+                document.body.appendChild(styleElement);
+            })
+            .catch(reject => console.log('Ocorreu um erro na busca pelo css!'));
+
+
+
+
+        // pegar url de imagens com fetch 
+        fetch('./arquivos/img2.png')
+            .then(response => {
+                // verifica se o status é válido 
+                if (response.status === 404) {
+                    console.log(Error('Arquivo não encontrado!'));
+                } else {
+                    return response.blob();
+                }
+            })
+            .then(img => {
+                // verifica se retornou uma imagem no response 
+                if (img !== undefined) {
+                    console.log(img.size);
+                    console.log(img.type);
+
+                    // cria uma url única para a imagem 
+                    const blobURL = URL.createObjectURL(img),
+                        // seleciona a tag de imagem 
+                        tagImg = document.querySelector('img');
+
+                    // joga a url retornada pro source da tag img 
+                    tagImg.src = blobURL.trim();
+
+                    //console.log(blobURL);
+                }
+            })
+            .catch(reject => console.log(reject));
+
+
+        // blockchain
+        // apis de cotações de moedas https://docs.awesomeapi.com.br/        
+        const avisoBlockchain = document.querySelector('avisoBlockchain'),
+            set15m = document.querySelector('[data-blockchain="15m"]'),
+            last = document.querySelector('[data-blockchain="last"]'),
+            buy = document.querySelector('[data-blockchain="buy"]'),
+            sell = document.querySelector('[data-blockchain="sell"]'),
+            symbol = document.querySelector('[data-blockchain="symbol"]');
+
+        setInterval(() => {
+            fetch('https://blockchain.info/ticker')
+                .then(response => response.json())
+                .then((resolve) => {
+                    const valorBitcoin = resolve.BRL;
+                    // console.log(valorBitcoin.BRL);
+
+                    console.log('atualizou o valor!');
+                    last.innerText = resolve.BRL.last.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    buy.innerText = resolve.BRL.buy.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    sell.innerText = resolve.BRL.sell.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    symbol.innerText = resolve.BRL.symbol;
+                })
+                .catch((reject) => console.log(reject));
+        }, 2000);
+
+
+        // pegar uma piada randômica do Chuck Norris 
+        const valueJoke = document.querySelector('p'),
+            data = document.querySelector('h6'),
+            link = document.querySelector('a'),
+            icon = document.querySelector('[data-joke="image"]');
+
+        fetch('https://api.chucknorris.io/jokes/random')
+            .then(response => response.json())
+            .then((resolve) => {
+                let dataFormatada = new Date(resolve.created_at).toLocaleDateString();
+
+                data.innerText = dataFormatada;
+                link.innerText = resolve.url;
+                valueJoke.innerText = resolve.value;
+                icon.src = resolve.icon_url;
+            });
+    </script>
+</body>
+
+</html>
